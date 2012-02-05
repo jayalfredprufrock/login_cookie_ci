@@ -15,6 +15,28 @@ Requirements
 
 Usage
 ----------------
+First, setup the table listed at the bottom of the readme.
+
+Setting a login cookie looks like this:
+
+$this->login_cookie->set($this->user->user_id);
+
+
+And then you'll need to do a check (often times in an overridden MY_Controller.php that protects certain controllers)
+that looks like this:
+
+$user_id = $this->login_cookie->authenticate();
+			
+if ($user_id){
+	$this->user = $this->user_m->get_user($user_id);
+	$this->user->cookie_login = TRUE;
+	$this->session->set_userdata('user', $this->user);
+}
+
+
+In the above example, the variable "cookie_login" can be used to prevent access to certain portions of the site
+(like a password changing form) since the cookie could potentially be stolen
+
 
 
 Credits
