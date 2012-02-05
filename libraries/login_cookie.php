@@ -4,14 +4,12 @@
 /**
  * CodeIgniter Login Cookie
  *
- * Work with remote servers via cURL much easier than using the native PHP bindings.
  *
  * @package        	CodeIgniter
  * @subpackage    	Libraries
  * @category    	Libraries
- * @author        	Philip Sturgeon
- * @license         http://philsturgeon.co.uk/code/dbad-license
- * @link			http://getsparks.org/packages/curl/show
+ * @author        	Andrew Smiley
+ * @license         MIT
  */
 
 class Login_cookie {
