@@ -15,27 +15,45 @@ Requirements
 
 Usage
 ----------------
-First, setup the table listed at the bottom of the readme.
+
+First, be sure to setup the table listed at the bottom of the readme.
 
 Setting a login cookie looks like this:
 
 $this->login_cookie->set($this->user->user_id);
 
+This should really on be done directly after a successful login. 
 
-And then you'll need to do a check (often times in an overridden MY_Controller.php that protects certain controllers)
-that looks like this:
+
+Then you'll need to do a check (often times in an overridden MY_Controller.php that protects certain controllers)
+when a user is NOT logged in to see if they have a valid cookie, and thus should be automaticalily logged in.
+Here is the method:
 
 $user_id = $this->login_cookie->authenticate();
 			
-if ($user_id){
-	$this->user = $this->user_m->get_user($user_id);
-	$this->user->cookie_login = TRUE;
-	$this->session->set_userdata('user', $this->user);
+At this point, $user_id is either false, which means that the user doesn't have a valid login cookie,
+or the user_id that the user needs to be logged in to as.			
+		
+		
+The following is a more complete example of potential usage:
+
+//user not logged in		
+if (!$this->session->userdata('user')){	
+
+	$user_id = $this->login_cookie->authenticate();
+	
+	if ($user_id){
+	
+		$this->user = $this->user_m->get_user($user_id);
+		$this->cookie_login = TRUE;
+		$this->session->set_userdata('user', $this->user);
+	}
 }
 
 
-In the above example, the variable "cookie_login" can be used to prevent access to certain portions of the site
-(like a password changing form) since the cookie could potentially be stolen
+It is wise to not let users that have been auto-logged in via a cookie to access certain portions of the site
+(like a password changing form) since the cookie could potentially be stolen (though unlikely). The details
+of the security implications of such a method are in the articles below.
 
 
 
@@ -45,7 +63,8 @@ Complete rewrite of Ravi Raj code posted here: http://codeigniter.com/forums/vie
 which was an implementation of algorithm detailed in the following article: http://jaspan.com/improved_persistent_login_cookie_best_practice
 
 
-Note, you'll need to create the following database in order for this spark to function correctly.
+**Note** 
+The spark requires the following table in order to function correctly.
 
 Database
 ----------------
