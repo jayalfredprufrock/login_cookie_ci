@@ -52,9 +52,18 @@ The following is a more complete example of potential usage:
 
 
 It is wise to not let users that have been auto-logged in via a cookie to access certain portions of the site
-(like a password changing form) since the cookie could potentially be stolen (though unlikely). The details
+(like a password changing form) since the cookie could potentially be stolen (though unlikely). 
+In the example above, the variable "cookie_login" can be used to make such a distinction. The details
 of the security implications of such a method are in the articles below.
 
+
+Finally, you need to destroy the cookie should a user ever explicitly log out.
+
+	$this->login_cookie->destroy();
+
+
+
+There are a few more exposed methods that give you more control over things, but nothing worth noting here.
 
 
 Credits
