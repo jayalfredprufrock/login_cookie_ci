@@ -108,6 +108,7 @@ class Login_cookie {
 		//already has series, so this is an update of the token only
 		else {
 			
+			$this->_ci->db->where(array('user_id'=>$cookie['user_id'], 'series'=>$cookie['series']));
 			$this->_ci->db->update($this->_db, $cookie);
 		}
 		
